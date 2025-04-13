@@ -1,0 +1,38 @@
+(defwindow volumec
+              :monitor 0
+              :geometry (geometry :x "12" 
+                                  :y "40px" 
+                                  :width "50px" 
+                                  :height "20px" 
+                                  :anchor "bottom left")
+              :hexpand false
+              :vexpand false
+              :class "volumec"
+              (audio-vv))
+
+		(defwidget audio-vv []
+			(box :vexpand "false" 
+           :hexpand "false"
+           :class "audio-vv-c"
+				(box :orientation "h" 
+             :spacing 25 
+             :halign "center" 
+             :valign "center" 
+             :space-evenly "false" 
+             :vexpand "false" 
+             :hexpand "false"
+					(box :class "volume_bar" 
+               :orientation "v" 
+               :spacing 20 
+               :space-evenly "false" 
+               :vexpand "false" 
+               :hexpand "false"
+                            (scale 
+                              :flipped "true" 
+                              :orientation "v" 
+                              :min 0 :max 101 
+                              :value VOLUME
+                              :onchange "pamixer --set-volume {}" )
+                            (label  
+                              :text "󰕾" 
+                              :class "vol_icon")))))

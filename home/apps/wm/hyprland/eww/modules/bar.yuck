@@ -1,0 +1,82 @@
+(defpoll TIME :interval "1s" "scripts/bar/time.sh")
+(defpoll VOL :interval "0.001s" "scripts/bar/volume.sh")
+(defpoll LAYOUT :interval "0.01s" "scripts/bar/layout.sh")
+(defpoll BATTERY :interval "0.1s" "scripts/bar/battery.sh")
+(defpoll CAPS :interval "0.1s" "scripts/bar/caps.sh")
+
+(defwindow bar
+            :monitor 0
+            :geometry (geometry :x "0px"
+                                :y "0px"
+                                :width "40px" 
+                                :height "1080px"
+                                :anchor "center left")
+            :stacking "fg"
+            :exclusive true
+            :windowtype "dock"
+            :wm-ignore false
+            (box (main-bar)))
+
+(defwidget main-bar []
+  (box :orientation "v"
+       :class "main-bar-class"
+       (start)
+       (center)
+       (end)))
+
+(defwidget start []
+  (box :orientation "v"
+       :valign "start"
+       :space-evenly "false"
+       (workspaces0)))
+
+(defwidget center []
+  (box :orientation "v"
+       :valign "center"
+       :space-evenly "false"
+       (button :class "time-c"
+               :onclick "~/.config/eww/scripts/open_widget.sh cal"
+               TIME)))
+
+(defwidget end []
+  (box :orientation "v"
+       :valign "end"
+       :space-evenly "false"
+       (end-two)
+       (end-1)))
+
+(defwidget end-1 []
+  (box :orientation "v"
+       :space-evenly "false"
+       (button :class "button-menu-class"
+               :onclick "~/.config/eww/scripts/open_widget.sh menu"
+               "")))
+
+
+(defwidget end-two []
+  (button :class "left-two-button"
+          :onclick "~/.config/eww/scripts/open_widget.sh volume"
+       (box :class "left-module"
+       :orientation "v"
+       (label :class "caps" 
+              :text CAPS)
+       (label :class "volme" 
+              :text VOL)
+       (label :class "battery" 
+              :text BATTERY)
+       (label :class "layout" 
+              :text LAYOUT))))
+
+(defpoll workspace0 :interval "0.01s" "~/.config/eww/scripts/bar/ws11.sh")
+
+(defwidget workspaces0 []
+  (eventbox 
+    :onscroll "hyprctl dispatch workspace `echo {} | sed 's/up/+/; s/down/-/'`1"
+    (box 
+      :class "workspaces"
+      :orientation "v"
+      (for i in workspace0
+        (button
+          :onclick "hyprctl dispatch workspace ${i.id}"
+          :class "${i.class}"
+          "${i.name}")))))

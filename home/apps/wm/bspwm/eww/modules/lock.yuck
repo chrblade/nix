@@ -1,0 +1,57 @@
+(defpoll DATE :interval "1s" "date '+%Y-%M-%d'")
+(defpoll DATE_TIME :interval "1s" "date '+%H:%M'")
+(defvar BLUR "otherFiles/lock/blur.png")
+
+(defwidget main-lock-menu [] 
+  (box :orientation "v"
+       :space-evenly "false"
+       :halign "center"
+       (avatar-lock)))
+
+(defwidget avatar-lock []
+  (box :orientation "h"
+       :space-evenly "false"
+       (box :class "avatar-lock-class"
+            :style "background-image: url('${AVATAR}');")))
+(defwidget blur [] 
+	(box :class "blur-menu" 
+             :style "background-image: url('${BLUR}');"))
+(defwidget avatar-lock []
+  (box :orientation "h"
+       :space-evenly "false"
+       (box :class "avatar-lock-class"
+            :style "background-image: url('${AVATAR}');")))
+
+(defwidget good-day-lock []
+  (box :orientation "v"
+       :space-evenly "false"
+       (label :class "good-day-class"
+              :text "Good")
+       (label :class "good-day-class-two"
+              :text GOOD)
+       (label :class "date-class"
+              :text DATE)
+       (label :class "date-time-class"
+              :text DATE_TIME)
+       (label :class "lock-icon-class" 
+              :text "")))
+(defwindow lock-blur
+              :monitor 0
+              :geometry (geometry :width "1920px"
+                                  :height "1080px")
+     :stacking "bg"
+     :wm-ignore "true"
+     :windowtype "dock"
+     (box (blur)))
+
+(defwindow lock-menu 
+              :monitor 0
+              :geometry (geometry :y "390px"
+                                  :width "500px"
+                                  :height "300px"
+                                  :anchor "top center")
+              :stacking "fg"
+              :windowtype "dock"
+              :wm-ignore "true"
+              (box (avatar-lock)
+                   (good-day-lock)))

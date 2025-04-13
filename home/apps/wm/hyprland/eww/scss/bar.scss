@@ -1,0 +1,63 @@
+.workspaces {
+  margin: 6px 0px 0px 0px;
+  button.workspace {
+    background: $bg1;
+    color: $fg;
+    padding: 2px 0px;
+    margin: 3px 6px;
+    border-radius: 100%;
+    
+    &.active {
+      background: $fg;
+      color: $bg;
+      border-radius: 100%;
+    }
+  }
+}
+
+.time-c {
+  background: $fg;
+  color: $bg1;
+  margin: 0px 7px;
+  padding: 4px 0px;
+  border-radius: 12px;
+}
+
+.left-two-button {
+  background: $bg1;
+  color: $fg;
+  margin: 0px 6px 4px 6px;
+  padding: 4px 0px;
+  border-radius: 6px;
+}
+
+.caps,
+.volme,
+.battery {
+  font-family: SymbolsNerdFontMono;
+}
+
+.button-menu-class {
+  background: $fg;
+  color: $bg1;
+  margin: 3px 6px 10px 6px;
+  padding: 2px 0px;
+  border-radius: 100%;
+}
+
+
+.main-bar-class {
+  background: $bg;
+}
+/*
+
+
+.bar {
+  background: transparent;
+}
+
+.main-bar-class {
+  background: $bg;
+  border-radius: 0px 12px 12px 0px;
+}
+*/

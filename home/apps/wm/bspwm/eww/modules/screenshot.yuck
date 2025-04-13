@@ -1,0 +1,42 @@
+(defpoll TEXTSCR :interval "10m" "~/.config/eww/scripts/screenshot/text.sh")
+
+(defwindow screenshot
+              :monitor 0
+              :geometry (geometry :y "-20px"
+                                  :width "230px"
+                                  :height "80px"
+                                  :anchor "bottom center")
+              :windowtype "dock"
+              :ignore-wm "false"
+              (box (main-screenshot)))
+
+(defwidget buttons []
+  (box :orientation "h"
+       :space-evenly "false"
+       :halign "center"
+       (button :class "screen-custom"
+               :onclick "eww close screenshot & flameshot gui"
+               "")
+       (button :class "screen-full"
+               :onclick "eww close screenshot & flameshot full"
+               "󰊔")
+       (button :class "screen-single"
+               :onclick "eww close screenshot & flameshot screen"
+               "󰹑")
+       (button :class "screen-settings"
+               :onclick "eww close screenshot & flameshot config"
+               "")
+       (button :class "screen-close"
+               :onclick "eww close screenshot"
+               "")))
+
+(defwidget main-screenshot []
+  (box :orientation "v"
+      (text)
+      (buttons)))
+
+(defwidget text []
+  (box :orientation "v"
+       :space-evenly "false"
+       (label :class "text-screen" 
+              :text TEXTSCR)))

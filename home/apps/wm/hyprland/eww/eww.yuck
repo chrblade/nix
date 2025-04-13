@@ -1,0 +1,8 @@
+(include "modules/bar.yuck")
+(include "modules/menu.yuck")
+(include "modules/calendar.yuck")
+(include "modules/volume.yuck")
+(include "modules/screenshot.yuck")
+(include "modules/dialog.yuck")
+(include "modules/music.yuck")
+

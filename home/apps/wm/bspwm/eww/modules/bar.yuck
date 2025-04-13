@@ -1,0 +1,97 @@
+(defpoll workspaces :interval "0.01s" "scripts/bar/workspace.sh")
+(defpoll TIME :interval "1s" "scripts/bar/time.sh")
+(defpoll VOL :interval "0.001s" "scripts/bar/volume.sh")
+(defpoll volume :interval "0.001s" "scripts/bar/volume.sh")
+(defpoll LAYOUT :interval "0.01s" "scripts/bar/layout.sh")
+(defpoll BATTERY :interval "0.1s" "scripts/bar/battery.sh")
+(defpoll CAPS :interval "0.1s" "scripts/bar/caps.sh")
+(defpoll MUS :interval "0.1s" "scripts/bar/music.sh")
+
+(defwindow bar
+            :monitor 0
+            :geometry (geometry :x "0%"
+                                :y "8px"
+                                :width "1898px" 
+                                :height "37"
+                                :anchor "center top")
+            :stacking "fg"
+            :exclusive true
+            :windowtype "dock"
+            :wm-ignore false
+            (box 
+              (left) 
+              (center) 
+              (right)))
+
+(defwidget left []
+  (eventbox
+    (box :orientation "h"
+         :space-evenly "false"
+         :halign "start"
+         (left-menu)
+         (left-two)
+         (left-weather))))
+
+(defwidget left-two []
+  (button :class "left-two-button"
+          :onclick "eww open volumec"
+       (box :class "left-module"
+       :orientation "horizontal"
+       :space-evenly "false"
+       (label :class "caps" 
+              :text CAPS)
+       (label :class "volme" 
+              :text VOL)
+       (label :class "battery" 
+              :text BATTERY)
+       (label :class "layout" 
+              :text LAYOUT))))
+
+(defwidget left-weather []
+  (box :orientation "h"
+       :space-evenly "false"
+       (button :class "weather" 
+               :onclick "~/.config/eww/scripts/weather/weather_widget_open.sh" 
+               WEATHER)))
+
+(defwidget left-menu []
+  (box :orientation "h"
+       (button :class "menu-left" 
+               :onclick "eww open menu" " 󰤂")))
+
+(defwidget center []
+  (box :orientation "h"
+       :halign "center"
+       :space-evenly "false"
+       :spacing 3
+       (button :class "time" 
+               :onclick "eww open mycal" 
+                TIME)
+       (left-music)))
+
+(defwidget left-music []
+  (box :orientation "h"
+       :space-evenly "false"
+       (label :class "left-music-text"
+              :text MUS)))
+
+(defwidget right []
+  (eventbox
+    (box
+      :orientation "h"
+      :space-evenly "false"
+      :spacing 2
+      :halign "end"
+      (workspaces))))
+
+(defwidget workspaces []
+  (box
+    :class "workspaces"
+    :orientation "horizontal"
+    :spacing 0
+    (for workspace in workspaces
+      (button
+        :class {workspace.active ? "w-actv" : "w"}
+        :onclick "bspc desktop -f ${workspace.name}"
+        :hexpand true
+        "${workspace.name}"))))

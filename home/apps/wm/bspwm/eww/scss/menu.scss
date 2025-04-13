@@ -1,0 +1,119 @@
+.avatar-w {
+  	background-size: 90px;
+	min-height: 90px;
+	min-width: 90px;
+}
+.menu-close-button {
+  margin: 0px 0px 7px 10px;
+  border-radius: 12px;
+}
+.menu-user-avatar {
+  background-size: 60px;
+  min-height: 60px;
+  min-width: 60px;
+  margin: 10px 15px 12px 20px;
+  border-radius: 12px;
+}
+
+.menu-user-one-class {
+  margin: 14px 10px 0px 6px;
+}
+.menu {
+  background: $bg;
+}
+
+.menu-top-module {
+  background: $bg;
+  margin: 7px 0px 0px 10px;
+  border-radius: 12px;
+}
+
+.menu-bottom-module {
+  background: $bg1;
+  margin: 7px 0px 7px 10px;
+  border-radius: 12px;
+}
+
+.mem-bar {
+  background: $bg;
+}
+
+.mem-bar-text {
+  font-family: SymbolsNerdFont;
+  font-size: 20px;
+}
+
+.mem-bar-text {
+  margin: 20px;
+}
+
+.menu-info-class {
+  background: $bg1;
+  border-radius: 12px;
+  margin: 0px 0px 0px 6px;
+  padding: 6px;
+}
+
+.menu-power-class {
+  background: $bg1;
+  border-radius: 12px;
+}
+
+.menu-power-one-off {
+  border-radius: 8px;
+  background: $fg;
+  color: $bg;
+  margin: 6px;
+}
+
+.menu-power-two-exit {
+  border-radius: 8px;
+  background: $fg;
+  color: $bg;
+  margin: 6px;
+}
+
+.menu-power-one-reboot {
+  border-radius: 8px;
+  background: $fg;
+  color: $bg;
+  margin: 6px;
+}
+
+.menu-power-two-lock {
+  border-radius: 8px;
+  background: $fg;
+  color: $bg;
+  margin: 6px;
+}
+
+.search-w {
+  background: $fg;
+  color: $bg;
+  margin: 0px 3em 1em 3em;
+  padding: 4px 3px 4px 3px;
+  border-radius: 6px;
+}
+.good-day-w {
+  font-size: 30px;
+  margin: 2px 0px 0px 0px;
+}
+
+.informat-w {
+  font-size: 15px;
+  margin: 0px 0px 10px 0px;
+}
+.menu-weather-class {
+  background: $bg1;
+  margin: 0px 0px 7px 10px;
+  padding: 10px 0px 10px 0px;
+  border-radius: 12px;
+}
+
+.menu-weather-icon {
+  font-size: 30px;
+}
+
+.menu-weather-text {
+  font-size: 20px;
+}

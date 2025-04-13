@@ -1,0 +1,93 @@
+* {
+	bg: #282828;
+	fg: #ebdbb2;
+}
+
+configuration {
+  modes: "drun"; 
+  font: "JetBrainsMono Regular 10";
+	location: 0;
+	xoffset: 0;
+	yoffset: 0;
+}
+
+window {
+  background-color: @bg;
+  width: 400;
+  border: 2px solid;
+	border-radius: 12px;
+	border-color: #32302f;
+}
+
+mainbox {
+  background-color: @bg;
+  padding: 6px;
+  margin: 8px;
+	border-radius: 12px;
+}
+
+inputbar {
+  background-color: @fg;
+  border: 2px solid;
+  border-color: @fg;
+  padding: 4px;
+  border-radius: 5px;
+}
+
+prompt {
+  enabled: false; 
+}
+
+textbox-prompt-colon {
+    expand: false; 
+    str: "::"; 
+    background-color: @fg;
+    text-color: @bg;
+}
+
+entry {
+  background-color: @fg;
+  text-color: @bg;
+  cursor: text; 
+  placeholder: "Search..."; 
+  placeholder-color: @bg;
+}
+
+listview {
+  columns: 1; 
+  lines: 16; 
+  dynamic: true;
+  scrollbar: false; 
+  fixed-height: true; 
+  fixed-columns: true; 
+  background-color: @bg;
+  text-color: @fg;
+  margin: 5px 0px 0px 0px;
+}
+
+element {
+  background-color: @bg;
+  text-color: @fg;
+  padding: 5px 3px;
+}
+
+element normal.normal,
+element alternate.normal,
+message,
+error-message {
+  background-color: @bg;
+  text-color: @fg;
+}
+
+element selected.normal {
+  background-color: @fg;
+  text-color: @bg;
+  border-radius: 5px;
+}
+
+error-message,
+textbox {
+  padding: 3px;
+  background-color: @bg;
+  text-color: @fg;
+}
