@@ -18,6 +18,7 @@
 
 		./services/openssh.nix
 		./services/xserver.nix
+		./services/scripts/units.nix
 
 		./userConfigs/users.nix
 		./userConfigs/autoLogin.nix
