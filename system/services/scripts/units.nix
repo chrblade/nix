@@ -30,7 +30,7 @@
 			setxkbmap = {
 				wantedBy = [ "timers.target" ];
 				description = "change layout"; #заебало в определенное время сбрасываться
-				path = [ pkgs.xorg.setxkbmap pkgs.dunst ];
+				path = [ pkgs.xorg.setxkbmap pkgs.dunst pkgs.bash];
 				script = ''/home/chronoblade/nix/system/services/scripts/setxkbmap.sh'';
 				serviceConfig = {
 					User = "chronoblade";
