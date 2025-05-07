@@ -1,29 +1,33 @@
 { ... }: {
 	imports = [
-		#Пакеты, вкл программы
-		./apps/apps.nix
-		./apps/packages.nix
+		./locale.nix
+		./network.nix
+		./security.nix
 
-		#Че то низкоуровневое
-		#Ну и бутлоадер
-		./hardware/boot.nix
-		./hardware/filesystems.nix
-		./hardware/hardware.nix
+		./hardware/disko.nix
+		./hardware/kernel.nix
+		./hardware/boot/grub.nix
+		./hardware/boot/plymouth.nix
+		./hardware/graphics/graphicsSettings.nix
+		./hardware/graphics/intelDriver.nix
+		./hardware/graphics/nvidiaDriver.nix
+		./hardware/graphics/nvidiaPrime.nix
 
-		#Основное прям про никсу
-		./nix/system.nix
 		./nix/nixpkgs.nix
+		./nix/settings.nix
 
-		#Сервисы(иксы и тд), юниты
-		./services/services.nix
-		./services/units.nix
+		./services/openssh.nix
+		./services/xserver.nix
 
-		#Другое
-		./etc/locale.nix
-		./etc/networking.nix
+		./userConfigs/users.nix
+		./userConfigs/autoLogin.nix
 
-		#Юзерская хуйня
-		./user/security.nix
-		./user/user.nix
+		./utilities/virtualisation.nix
+		./utilities/packages/defaultPackages.nix
+		./utilities/packages/fontPackages.nix
+		./utilities/programs/adb.nix
+		./utilities/programs/nh.nix
+		./utilities/programs/steam.nix
+		./utilities/programs/zsh.nix
 	];
 }

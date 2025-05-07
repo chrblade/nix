@@ -1,0 +1,13 @@
+(defpoll MUS :interval "0.1s" "scripts/bar/music.sh")
+
+(defwindow mus 
+            :monitor 0
+            :geometry (geometry :x "0"
+                                :y "10"
+                                :width "500"
+                                :height "50"
+                                :anchor "bottom center")
+            :stacking "bg"
+            :windowtype "dock"
+            :wm-ignore false
+            (box :flipped "true" :class "mus-class" MUS))

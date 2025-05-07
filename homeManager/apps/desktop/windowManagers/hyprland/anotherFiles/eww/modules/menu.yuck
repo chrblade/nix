@@ -1,0 +1,194 @@
+(defvar AVATAR "otherFiles/menu/avatar.png")
+(defvar WEAT_IMG "otherFiles/menu/weather.png")
+(defpoll GOOD :interval "99s" "scripts/menu/good.sh")
+(defpoll MEM_MENU :interval "15s" "scripts/menu/mem_menu.sh")
+(defpoll VOL_PERC :interval "6s" "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defpoll MIC_PERC :interval "6s" "amixer -D pulse sget Capture | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+(defpoll DAT_MEN :interval "10s" "date +'%Y-%m-%d'")
+(defpoll VOLUME :interval "0.1s" "scripts/menu/vol.sh")
+
+(defpoll MUS_IMG :interval "1s" "playerctl metadata mpris:artUrl")
+(defpoll WEATHER :interval "500s" "scripts/menu/weather.sh")
+(defpoll WEATHER_ICON :interval "600s" "scripts/menu/weather_icon.sh")
+(defpoll WEATHER_WIND :interval "600s" "scripts/menu/weather_wind.sh")
+
+(defwidget menu-user []
+  (box :orientation "h"
+       :class "menu-user-class"
+       (box :class "menu-user-avatar" 
+            :style "background-image: url('${AVATAR}');")
+       (menu-user-one)))
+
+(defwidget menu-user-one []
+  (box :orientation "v"
+       :space-evenly "false"
+       :class "menu-user-one-class"
+       (label :class "menu-user-good"
+              :text "Good")
+       (label :class "menu-user-good-two" 
+              :text GOOD)
+       (label :class "menu-user-date"
+              :text DAT_MEN)))
+
+(defwindow menu
+            :monitor 0
+            :geometry (geometry :x "12px"
+                                :y "10px" ;190px это когда бар 700px
+                                :width "210px"
+                                :height "200px"
+                                :anchor "bottom left")
+            :stacking "fg"
+            :windowtype "normal"
+            :wm-ignore false
+            (box (menu-main-main)))
+
+(defwidget menu-main-main []
+  (box :orientation "v"
+       :space-evenly "false"
+       :class "menu-main-class"
+       (menu-main)
+       (menu-music)))
+
+(defwidget menu-main []
+  (box :orientation "h"
+       :space-evenly "false"
+       :hexpand "false"
+       :vexpand "false"
+       (menu-left)
+       (menu-right)))
+
+(defwidget menu-left []
+  (box :orientation "v"
+       :space-evenly "false"
+       (menu-top) 
+       (menu-bottom)
+       (menu-weather)))
+
+
+(defwidget menu-bottom []
+  (box :orientation "v"
+       :class "menu-bottom-module"
+       :hexpand "false"
+       :vexpand "false"
+       (menu-user)))
+
+(defwidget menu-top [] 
+  (box :orientation "h"
+       :class "menu-top-module"
+       :hexpand "false"
+       :vexpand "false"
+       (menu-power)
+       (menu-info)))
+
+(defwidget menu-right []
+  (box :orientation "h"
+       (audio)))
+
+(defwidget menu-info []
+  (box :orientation "h"
+       :class "menu-info-class"
+       (circular-progress :class "mem-bar" 
+                          :value MEM_MENU 
+                          :thickness 8
+                          (label :class "mem-bar-text"
+                                 :text ""))))
+(defwidget menu-power []
+  (box :orientation "h"
+       :class "menu-power-class"
+       (menu-power-one)
+       (menu-power-two)))
+
+(defwidget menu-power-one []
+  (box :orientation "v"
+       :space-evenly "false"
+       :spacing "0"
+       (button :class "menu-power-one-off" 
+               :onclick "eww close menu & eww open off-dialog" 
+               "")
+       (button :class "menu-power-one-reboot" 
+               :onclick "eww close menu & eww open reboot-dialog"
+               "󰑓")))
+
+(defwidget menu-power-two []
+  (box :orientation "v"
+       :space-evenly "false"
+       :spacing "0"
+       (button :class "menu-power-two-exit" 
+               :onclick "eww close menu & eww open exit-dialog"
+               "󰈆")
+       (button :class "menu-power-two-lock" 
+               :onclick "eww close menu & eww open lock-dialog-zopa" 
+               "󰌾")))
+
+
+(defwidget menu-weather []
+  (box :orientation "h"
+       :class "menu-weather-class"
+       :style "background-image: url('${WEAT_IMG}');"
+       (label :class "menu-weather-icon"
+              :text WEATHER_ICON)
+       (menu-weather-two)))
+
+(defwidget menu-weather-two []
+  (box :orientation "v"
+       :space-evenly "false"
+       (label :class "menu-weather-text"
+              :text WEATHER)
+       (label :class "menu-weather-wind"
+              :text WEATHER_WIND)))
+
+(defwidget menu-volume []
+  (overlay :hexpand true
+    (scale :min 0 
+           :max 100 
+           :active {VOLUME != "muted"} 
+           :value {VOLUME == "muted" ? 0 : VOLUME} 
+           :onchange "pamixer --set-volume {}" 
+           :class "vlm-scale no-s"
+           :orientation "v"
+           :spacing "20"
+           :flipped "true")))
+
+
+(defpoll volume_percent :interval "6s" "amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+		(defwidget audio []
+			(box :vexpand "false" 
+           :hexpand "false"
+           :class "audio-c"
+				(box :orientation "h" 
+             :spacing 25 
+             :halign "center" 
+             :valign "center" 
+             :space-evenly "false" 
+             :vexpand "false" 
+             :hexpand "false"
+					(box :class "volume_bar" 
+               :orientation "v" 
+               :spacing 20 
+               :space-evenly "false" 
+               :vexpand "false" 
+               :hexpand "false"
+                            (scale 
+                              :flipped "true" 
+                              :orientation "v" 
+                              :min 0 :max 101 
+                              :value VOLUME
+                              :onchange "pamixer --set-volume {}" )
+                            (label  
+                              :text "󰕾" 
+                              :class "vol_icon")))))
+
+(defpoll music_url :interval "4s" "scripts/menu/songart.sh echo")
+(defpoll music_pos :interval "0.01s" "playerctl position")
+
+(defwidget menu-music []
+  (box :orientation "v"
+       :space-evenly "true"
+       :class "class-menu-music"
+        :style "background-image: url('${music_url}');"
+       (label :class "menu-music-text"
+              :text MUS)
+       (progress :class "music-progres"
+                 :value music_pos)))
+
+

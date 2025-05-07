@@ -1,0 +1,596 @@
+новая конфигурация:
+
+{ config, pkgs, ... }: {
+	services = {
+		xserver = {
+		#  enable = true;
+		#  windowManager.bspwm.enable = true;
+    #  displayManager.lightdm.enable = false;
+    #  displayManager.startx.enable = true;
+			videoDrivers = [ "nvidia" ];
+		};
+		#libinput = {
+		#	enable = true;
+		#	mouse = {
+		#		accelProfile = "adaptive";
+		#	};
+		#};
+	};
+}
+{ pkgs, ... }: {
+	services = {
+		openssh = {
+			enable = true;
+			ports = [ 95 ];
+			settings = {
+      PasswordAuthentication = true;
+			UseDns = true;
+			AllowUsers = [ "chronoblade" ];
+			PermitRootLogin = "yes";
+			};
+		};
+	};
+}
+{ config, lib, ... }: {
+	networking = {
+		useDHCP = lib.mkDefault true;
+		hostName = "nix-fox";
+		networkmanager.enable = true;
+	};
+}
+
+{ config, ... }: {
+  time.timeZone = "Asia/Yekaterinburg";
+  i18n.defaultLocale = "ru_RU.UTF-8";
+  console = {
+    font = "cyr-sun16";
+    keyMap = "ru";
+  };
+}
+{ config, pkgs, ... }: {
+	boot = {
+		kernelPackages = pkgs.linuxPackages_zen;
+		kernelModules = [ "kvm-intel" ];
+		kernelParams = [ "quiet" "splash" ];
+		blacklistedKernelModules = [ "nouveau" ];
+		extraModulePackages = with config.boot.kernelPackages; [ amneziawg ];
+		consoleLogLevel = 3;
+		initrd = {
+			availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "uas" "sd_mod" "sdhci_pci" ];
+			kernelModules = [ "i915" ];
+			verbose = false;
+		};
+	};
+}
+{ inputs, ... }: {
+  imports = [ inputs.disko.nixosModules.disko ];
+  disko.devices = {
+    disk = {
+      my-disk = {
+        device = "/dev/sda";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              type = "EF00";
+              size = "1G";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
+              };
+            };
+						swap = {
+							size = "10G";
+							content = {
+								type = "swap";
+							};
+						};
+            root = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4"; # да, я люблю ext4, минусы?
+                mountpoint = "/";
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+}
+{ ... }: {
+	boot.plymouth = {
+		enable = true;
+		theme = "bgrt";
+	};
+}
+{ config, ... }: {
+	boot.loader = {
+		timeout = 7;
+		grub = {
+			efiSupport = true;
+			efiInstallAsRemovable = true;
+			device = "nodev";
+		};
+	};
+}
+{ pkgs, config, lib, ... }: {
+	hardware = {
+		intel-gpu-tools.enable = true;
+		cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+	};
+	systemd.services.gpu = {
+		enable = true;
+		wantedBy = [ "multi-user.target" ];
+	 serviceConfig = {
+      Description = "gpu service";
+     	Type = "simple";
+    	ExecStart = "${pkgs.intel-gpu-tools}/bin/intel_gpu_frequency -s 400";
+    };
+	};
+}
+{ ... }: {
+	hardware.graphics = {
+		enable = true;
+		enable32Bit = true;
+	};
+}
+{ config, pkgs, ... }: {
+	hardware.nvidia = {
+		modesetting.enable = true;
+		powerManagement = {
+			enable = true;
+			finegrained = false;
+		};
+		open = false; #Чтоб ты сдох хуанг блядь, такая вот проблема реализовать пропретарную хуйню для опен драйверов, цель опен драйверов же открыть код? Вот и код будет открытым.
+		nvidiaSettings = true;
+		package = config.boot.kernelPackages.nvidiaPackages.stable;
+	};
+}
+{ ... }: {
+  hardware.nvidia.prime = {
+		sync.enable = false;
+		offload = {
+			enable = true;
+			enableOffloadCmd = true;
+		};
+	 intelBusId = "PCI:0:2:0";
+	 nvidiaBusId = "PCI:1:0:0";
+  };
+}
+{ ... }: {
+	hardware.pulseaudio = {
+		enable = true;
+		support32Bit = true;
+	};
+}
+{ ... }: {
+	services.getty.autologinUser = "chronoblade";
+	environment.loginShellInit = ''
+		[[ "$(tty)" == /dev/tty1 ]] && Hyprland
+	'';
+}
+{ pkgs, ... }: {
+	users.users = {
+		chronoblade = {
+			isNormalUser = true;
+			extraGroups = [ "wheel" "input" "networkmanager" "video" "audio" ];
+			shell = pkgs.zsh;
+		};
+	};
+}
+{ pkgs, ... }: {
+	programs = {
+		gamemode.enable = true;
+		steam = {
+			enable = true;
+			gamescopeSession.enable = true;
+			extraCompatPackages = with pkgs; [ proton-ge-bin ];
+		};
+	};
+}
+{ ... }: {
+	programs.adb.enable = true;
+}
+{ ... }: {
+	programs.zsh.enable = true;
+}
+{ ... }: {
+	programs.nh = {
+		enable = true;
+		clean = {
+			enable = true;
+			dates = "weekly";
+			extraArgs = "--keep-since 7d";
+		};
+	};
+}
+{ pkgs, ... }: {
+	fonts = {
+		packages = with pkgs; [
+			cantarell-fonts
+			noto-fonts
+			noto-fonts-cjk-sans
+			noto-fonts-emoji
+			fira-code-symbols
+			fira-code
+			dejavu_fonts
+			jetbrains-mono
+			nerd-fonts.symbols-only
+			nerd-fonts.jetbrains-mono
+		];
+		fontconfig.defaultFonts.emoji = [ "Noto Color Emoji" ];
+	};
+}
+{ pkgs, ... }: {
+	environment.systemPackages = with pkgs; [
+		#Безделушки
+		fastfetch
+		btop
+
+		#Для никсы
+		nix-prefetch-git
+		home-manager
+		nh
+
+		#Сис утилиты
+		pciutils
+		glxinfo
+		killall
+		inxi
+		tree
+		bc
+
+		#Основ пакеты
+    micro 
+    wget
+    git
+    bash
+	];
+}
+{ pkgs, ... }: {
+	virtualisation = {
+		docker = {
+			enable = true;
+			package = pkgs.docker;
+			enableNvidia = true;
+			storageDriver = "overlay2";
+			logDriver = "json-file";
+			enableOnBoot = true;
+		};
+		virtualbox.host = {
+			enable = true;
+			package = pkgs.virtualbox;
+			enableExtensionPack = true;
+			enableKvm = true;
+			addNetworkInterface = false;
+		};
+	};
+}
+{ pkgs, ... }: {
+	security = { 
+		polkit = {
+			enable = true;
+		};
+	 sudo = {
+      enable = true;
+      extraRules = [{
+        commands = [
+          {
+			     command = "${pkgs.systemd}/bin/reboot";
+				 	options = [ "NOPASSWD" ];
+			 	}
+			 	{
+				   command = "${pkgs.systemd}/bin/poweroff";
+			 	 options = [ "NOPASSWD" ];
+			 	}];
+        groups = [ "wheel" ];
+      }];
+    };
+	};
+}
+{ config, ... }: {
+	nix.settings.experimental-features = [ "nix-command" "flakes" ];
+	system.stateVersion = "24.11";
+}
+{ config, lib, ... }: {
+	nixpkgs = {
+		config = {
+			allowUnfree = true;
+			allowUnfreePredicate = true;
+		};
+		hostPlatform = lib.mkDefault "x86_64-linux";
+	};
+}
+
+старая:
+{ config, lib, ... }: {
+	nixpkgs = {
+		config = {
+			allowUnfree = true;
+			allowUnfreePredicate = true;
+		};
+		hostPlatform = lib.mkDefault "x86_64-linux";
+	};
+}
+{ config, ... }: {
+	nix.settings.experimental-features = [ "nix-command" "flakes" ];
+	system.stateVersion = "24.11";
+}
+{ config, lib, pkgs, modulesPath, ... }: {
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
+  hardware = {
+    intel-gpu-tools.enable = true;
+    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    pulseaudio = {
+      enable = true;
+      support32Bit = true;
+      };
+    graphics = { 
+      enable = true; 
+      enable32Bit = true;
+      };
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement = {
+        enable = false;
+        finegrained = false;
+        };
+	prime = {
+	 sync.enable = false;
+	 offload = {
+          enable = true;
+          enableOffloadCmd = true;
+	 };
+	 intelBusId = "PCI:0:2:0";
+	 nvidiaBusId = "PCI:1:0:0";
+	};
+      open = false;
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
+  };
+}
+{ config, pkgs, ... }: {
+	boot = {
+		kernelPackages = pkgs.linuxPackages_zen;
+		kernelModules = [ "kvm-intel" ];
+		kernelParams = [ "quiet" "splash" ];
+		blacklistedKernelModules = [ "nouveau" ];
+		extraModulePackages = with config.boot.kernelPackages; [ amneziawg ];
+		consoleLogLevel = 3;
+		initrd = {
+			availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "uas" "sd_mod" "sdhci_pci" ];
+			kernelModules = [ "i915" ];
+			verbose = false;
+		};
+		loader = {
+			timeout = 7;
+			grub = {
+				efiSupport = true;
+				efiInstallAsRemovable = true;
+				device = "nodev";
+			};
+		};
+		plymouth = {
+			enable = true;
+			theme = "bgrt";
+		};
+	};
+}
+{ inputs, ... }: {
+  imports = [ inputs.disko.nixosModules.disko ];
+  disko.devices = {
+    disk = {
+      my-disk = {
+        device = "/dev/sda";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              type = "EF00";
+              size = "1G";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
+              };
+            };
+						swap = {
+							size = "10G";
+							content = {
+								type = "swap";
+							};
+						};
+            root = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4"; # да, я люблю ext4, минусы?
+                mountpoint = "/";
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+}
+{ config, pkgs, ... }: {
+	systemd.services.gpu = {
+		enable = true;
+		wantedBy = [ "multi-user.target" ];
+	 serviceConfig = {
+      Description = "gpu service";
+     	Type = "simple";
+    	ExecStart = "${pkgs.intel-gpu-tools}/bin/intel_gpu_frequency -s 400";
+     };
+	};
+}
+{ config, pkgs, ... }: {
+	services = {
+		xserver = {
+		#  enable = true;
+		#  windowManager.bspwm.enable = true;
+    #  displayManager.lightdm.enable = false;
+    #  displayManager.startx.enable = true;
+			videoDrivers = [ "nvidia" ];
+		};
+		#libinput = {
+		#	enable = true;
+		#	mouse = {
+		#		accelProfile = "adaptive";
+		#	};
+		#};
+		openssh = {
+			enable = true;
+			ports = [ 95 ];
+			settings = {
+      PasswordAuthentication = true;
+			UseDns = true;
+			AllowUsers = [ "chronoblade" ];
+			PermitRootLogin = "yes";
+			};
+		};
+	};
+}
+{ config, lib, ... }: {
+	networking = {
+		useDHCP = lib.mkDefault true;
+		hostName = "nix-fox";
+		networkmanager.enable = true;
+	};
+}
+{ config, ... }: {
+  time.timeZone = "Asia/Yekaterinburg";
+  i18n.defaultLocale = "ru_RU.UTF-8";
+  console = {
+    font = "cyr-sun16";
+    keyMap = "ru";
+  };
+}
+{ pkgs, ... }: {
+	programs = {
+		adb.enable = true;
+		gamemode.enable = true;
+		zsh.enable = true;
+		nh = {
+			enable = true;
+			clean = {
+				enable = true;
+				dates = "weekly";
+				extraArgs = "--keep-since 7d";
+			};
+		};
+		steam = {
+			enable = true;
+      gamescopeSession.enable = true;
+      extraCompatPackages = with pkgs; [
+        proton-ge-bin
+      ];
+		};
+	};
+}
+{ pkgs, ... }: {
+	virtualisation = {
+		docker = {
+			enable = true;
+			package = pkgs.docker;
+			enableNvidia = true;
+			storageDriver = "overlay2";
+			logDriver = "json-file";
+			enableOnBoot = true;
+		};
+		virtualbox.host = {
+			enable = true;
+			package = pkgs.virtualbox;
+			enableExtensionPack = true;
+			enableKvm = true;
+			addNetworkInterface = false;
+		};
+	};
+}
+{ pkgs, ... }: {
+	environment.systemPackages = with pkgs; [
+		#Безделушки
+		fastfetch
+		btop
+
+		#Для никсы
+		nix-prefetch-git
+		home-manager
+		nh
+
+		#Сис утилиты
+		pciutils
+		glxinfo
+		killall
+		inxi
+		tree
+		bc
+
+		#Основ пакеты
+    micro 
+    wget
+    git
+    bash
+	];
+	fonts = {
+		packages = with pkgs; [
+			cantarell-fonts
+			noto-fonts
+			noto-fonts-cjk-sans
+			noto-fonts-emoji
+			fira-code-symbols
+			fira-code
+			dejavu_fonts
+			jetbrains-mono
+			nerd-fonts.symbols-only
+			nerd-fonts.jetbrains-mono
+		];
+		fontconfig.defaultFonts.emoji = [ "Noto Color Emoji" ];
+	};
+}
+{ config, pkgs, ... }: {
+	security = { 
+		polkit = {
+			enable = true;
+		};
+	 sudo = {
+      enable = true;
+      extraRules = [{
+        commands = [
+          {
+			     command = "${pkgs.systemd}/bin/reboot";
+				 	options = [ "NOPASSWD" ];
+			 	}
+			 	{
+				   command = "${pkgs.systemd}/bin/poweroff";
+			 	 options = [ "NOPASSWD" ];
+			 	}];
+        groups = [ "wheel" ];
+      }];
+    };
+	};
+}
+{ pkgs, ... }: {
+	users.users = {
+		chronoblade = {
+			isNormalUser = true;
+			extraGroups = [ "wheel" "input" "networkmanager" "video" "audio" ];
+			shell = pkgs.zsh;
+		};
+	};
+	services.getty.autologinUser = "chronoblade";
+	environment.loginShellInit = ''
+		[[ "$(tty)" == /dev/tty1 ]] && Hyprland
+	'';
+}

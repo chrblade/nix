@@ -1,0 +1,98 @@
+.exit-dialog,
+.off-dialog,
+.reboot-dialog,
+.lock-dialog-zopa {
+  background: transparent;
+}
+
+.exit-main-dialog-class,
+.off-main-dialog-class,
+.lock-main-dialog-class,
+.reboot-main-dialog-class {
+  background: $bg;
+  border-radius: 12px;
+}
+
+.exit-text-dialog,
+.exit-text-dialog-two {
+  font-size: 15px;
+}
+
+.exit-text-dialog {
+  margin: 20px 0px 0px 0px;
+}
+
+.exit-yes-button {
+  background: $fg;
+  color: $bg;
+  margin: 1em 10px 1em 1em;
+}
+
+.exit-no-button {
+  background: $fg;
+  color: $bg;
+  margin: 1em 1em 1em 10px;
+}
+
+.lock-text-dialog,
+.lock-text-dialog-two {
+  font-size: 15px;
+}
+
+.lock-text-dialog {
+  margin: 20px 0px 0px 0px;
+}
+
+.lock-yes-button {
+  background: $fg;
+  color: $bg;
+  margin: 1em 10px 1em 1em;
+}
+
+.lock-no-button {
+  background: $fg;
+  color: $bg;
+  margin: 1em 1em 1em 10px;
+}
+
+.off-text-dialog,
+.off-text-dialog-two {
+  font-size: 15px;
+}
+
+.off-text-dialog {
+  margin: 20px 0px 0px 0px;
+}
+
+.off-yes-button {
+  background: $fg;
+  color: $bg;
+  margin: 1em 10px 1em 1em;
+}
+
+.off-no-button {
+  background: $fg;
+  color: $bg;
+  margin: 1em 1em 1em 10px;
+}
+
+.reboot-text-dialog,
+.reboot-text-dialog-two {
+  font-size: 15px;
+}
+
+.reboot-text-dialog {
+  margin: 20px 0px 0px 0px;
+}
+
+.reboot-yes-button {
+  background: $fg;
+  color: $bg;
+  margin: 1em 10px 1em 1em;
+}
+
+.reboot-no-button {
+  background: $fg;
+  color: $bg;
+  margin: 1em 1em 1em 10px;
+}

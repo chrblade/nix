@@ -1,0 +1,41 @@
+.avatar-lock-class {
+  all: unset;
+  background-size: 120px;
+  min-height: 120px;
+  min-width: 120px;
+  margin: 7em 0px 7em 6em;
+  border-radius: 12px;
+}
+.lock-menu {
+  background: $bg;
+}
+
+.lock-blur {
+  background-color: transparent;
+  opacity: 1;
+}
+
+.good-day-class {
+  font-size: 40px;
+  margin: 0.5em 25px 0px 0px;
+}
+
+.good-day-class-two {
+  font-size: 40px;
+  margin: 0px 25px 0px 0px;
+}
+
+.date-class {
+  font-size: 30px;
+  margin: 0px 25px 0px 0px;
+}
+
+.date-time-class {
+  font-size: 25px;
+  margin: 0px 25px 35px 0px;
+}
+
+.lock-icon-class {
+  font-size: 40px;
+  margin: 0px 25px 0px 0px;
+}

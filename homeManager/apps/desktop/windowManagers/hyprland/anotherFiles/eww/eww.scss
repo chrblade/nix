@@ -1,0 +1,17 @@
+$bg: #282828; /*282828*/
+$bg1: #393835; /*393835*/
+$fg: #ebdbb2; /*ebdbb2*/
+
+* {
+  font-family: JetBrainsMono Nerd Font;
+  font-weight: Bold;
+}
+
+@import 'scss/bar.scss';
+@import 'scss/menu.scss';
+@import 'scss/calendar.scss';
+@import 'scss/volume.scss';
+@import 'scss/screenshot.scss';
+@import 'scss/dialog.scss';
+@import 'scss/music.scss';
+

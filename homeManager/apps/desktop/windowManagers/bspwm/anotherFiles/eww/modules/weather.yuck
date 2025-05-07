@@ -1,0 +1,92 @@
+(defpoll WEATHER :interval "500s" "scripts/weather/weather.sh")
+(defpoll WEATHER_7DAYS :interval "600s" "scripts/weather/weather_7days.sh")
+(defpoll WEATHER_ICON :interval "600s" "scripts/weather/weather_icon.sh")
+(defpoll WEATHER_WIND :interval "600s" "scripts/weather/weather_wind.sh")
+(defpoll WEATHER_CITY :interval "600s" "scripts/weather/weather_contrycity.sh")
+
+(defwidget close []
+  (box :orientation "h"
+       :halign "center"
+       (button :class "close" 
+               :onclick "~/.config/eww/scripts/weather/weather_widget_close.sh" "")))
+
+(defwidget icon_w []
+  (box :orientation "v"
+       :halign "center"
+       :spacing "0"
+       (label :class "cloud" 
+              :text WEATHER_ICON)))
+
+(defwidget weat []
+  (box :orientation "v"
+       :halign "center"
+       :spacing "0"
+       (label :class "temperature" 
+              :text  WEATHER)
+       (label :class "wind" 
+              :text WEATHER_WIND)
+       (label :class "regioncity" 
+              :text WEATHER_CITY)))
+
+(defwidget main_g []
+  (box :orientation "v"  
+       :space-evenly "false"
+       :halign "center"
+       (box :orientation "h" 
+            :space-evenly "false" 
+            :halign "end" 
+            (mainw)) 
+            (close)))  
+
+(defwidget mainw []
+  (box
+    :orientation "v"
+    :space-evenly "false"
+    :spacing "2"
+    :halign "center"
+    (icon_w) (weat)))
+
+(defwidget mainn []
+  (box
+    :orientation "v"
+    :space-evenly "false"
+    :halign "center"
+    :spacing "0"
+    (seven_days)))
+
+(defwidget seven_days []
+  (box :orientation "v"
+       :space-evenly "false"
+       :spacing "0"
+       :halign "end"
+       (list_7days)))
+
+(defwidget list_7days [] 
+  (box :orientation "v" 
+       :halign "end"
+       (label :class "weather_7days" 
+              :text WEATHER_7DAYS))) 
+
+(defwindow weather_widget
+            :monitor 0
+            :geometry (geometry :x "-65px"
+                                :y "56"
+                                :width "125px"
+                                :height "175px"
+                                :anchor "center top")
+            :stacking "bg"
+            :windowtype "dock"
+            :wm-ignore false
+            (box (main_g)))
+
+(defwindow weather_widget_two
+             :monitor 0
+             :geometry (geometry :x "60px"
+                                 :y "56"
+                                 :width "115px"
+                                 :height "175px"
+                                 :anchor "center top")
+             :stacking "bg"
+             :windowtype "dock"
+             :wm-ignore false
+             (box (mainn)))

@@ -1,0 +1,25 @@
+.cal-inner-elems {
+  background: $bg;
+  border-width: 0px;
+  border-radius: 12px;
+  padding: 10px 10px 10px 10px;
+}
+
+.cal-date,
+.mycal {
+  all: unset;
+  padding: 10px;
+}
+
+.cal-i {
+  background: $bg;
+  border-width: 0px;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.cal-i.button {
+  margin: 10px;
+}
+
+

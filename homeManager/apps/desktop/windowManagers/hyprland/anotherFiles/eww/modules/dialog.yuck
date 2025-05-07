@@ -1,0 +1,134 @@
+(defwindow exit-dialog
+             :monitor 0
+             :geometry (geometry :x "0"
+                                 :y "0px"
+                                 :width "300px"
+                                 :height "150px"
+                                 :anchor "center")
+             :windowtype "dock"
+             (box (exit-main-dialog)))
+
+(defwidget exit-main-dialog []
+  (box :orientation "v"
+       :class "exit-main-dialog-class"
+       (exit-dialog-text) (exit-dialog-buttons)))
+
+(defwidget exit-dialog-text []
+  (box :orientation "v"
+       :space-evenly "false"
+       :halign "center"
+       (label :class "exit-text-dialog" 
+              :text "Are you sure")
+       (label :class "exit-text-dialog-two"
+              :text "you want to exit?")))
+
+(defwidget exit-dialog-buttons []
+  (box :orientation "h"
+       :space-evenly "true"
+       (button :class "exit-yes-button"
+               :onclick "bspc quit"
+               "Yes")
+       (button :class "exit-no-button"
+               :onclick "eww close exit-dialog"
+               "No")))
+
+(defwindow lock-dialog-zopa
+             :monitor 0
+             :geometry (geometry :x "0"
+                                 :y "0px"
+                                 :width "300px"
+                                 :height "150px"
+                                 :anchor "center")
+             :windowtype "dock"
+             (box (lock-main-dialog)))
+
+(defwidget lock-main-dialog []
+  (box :orientation "v"
+       :class "lock-main-dialog-class"
+       (lock-dialog-text) (lock-dialog-buttons)))
+
+(defwidget lock-dialog-text []
+  (box :orientation "v"
+       :halign "center"
+       :space-evenly "false"
+       (label :class "lock-text-dialog" 
+              :text "Are you sure you want")
+       (label :class "lock-text-dialog-two"
+              :text "to lock the session?")))
+
+(defwidget lock-dialog-buttons []
+  (box :orientation "h"
+       :space-evenly "true"
+       (button :class "lock-yes-button"
+               :onclick "eww close lock-dialog-zopa & hyprlock"
+               "Yes")
+       (button :class "lock-no-button"
+               :onclick "eww close lock-dialog-zopa"
+               "No")))
+(defwindow off-dialog
+             :monitor 0
+             :geometry (geometry :x "0"
+                                 :y "0px"
+                                 :width "300px"
+                                 :height "150px"
+                                 :anchor "center")
+             :windowtype "dock"
+             (box (off-main-dialog)))
+
+(defwidget off-main-dialog []
+  (box :orientation "v"
+       :class "off-main-dialog-class"
+       (off-dialog-text) (off-dialog-buttons)))
+
+(defwidget off-dialog-text []
+  (box :orientation "v"
+       :space-evenly "false"
+       :halign "center"
+       (label :class "off-text-dialog" 
+              :text "Are you sure you want to")
+       (label :class "off-text-dialog-two"
+              :text "shut down the system?")))
+
+(defwidget off-dialog-buttons []
+  (box :orientation "h"
+       :space-evenly "true"
+       (button :class "off-yes-button"
+               :onclick "poweroff"
+               "Yes")
+       (button :class "off-no-button"
+               :onclick "eww close off-dialog"
+               "No")))
+
+(defwindow reboot-dialog
+             :monitor 0
+             :geometry (geometry :x "0"
+                                 :y "0px"
+                                 :width "300px"
+                                 :height "150px"
+                                 :anchor "center")
+             :windowtype "dock"
+             (box (reboot-main-dialog)))
+
+(defwidget reboot-main-dialog []
+  (box :orientation "v"
+       :class "reboot-main-dialog-class"
+       (reboot-dialog-text) (reboot-dialog-buttons)))
+
+(defwidget reboot-dialog-text []
+  (box :orientation "v"
+       :space-evenly "false"
+       :halign "center"
+       (label :class "reboot-text-dialog" 
+              :text "Are you sure you")
+       (label :class "reboot-text-dialog-two"
+              :text "want to restart?")))
+
+(defwidget reboot-dialog-buttons []
+  (box :orientation "h"
+       :space-evenly "true"
+       (button :class "reboot-yes-button"
+               :onclick "reboot"
+               "Yes")
+       (button :class "reboot-no-button"
+               :onclick "eww close reboot-dialog"
+               "No")))

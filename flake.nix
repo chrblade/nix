@@ -7,9 +7,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs: 
+  outputs = { self, nixpkgs, home-manager, disko, ... }@inputs: 
     let
       system = "x86_64-linux";
       host = "nix-fox";
@@ -17,13 +22,13 @@
     in {
       nixosConfigurations.${host} = inputs.nixpkgs.lib.nixosSystem {
 	specialArgs = { inherit inputs; };
-	modules = [ ./system/default.nix ];
+	modules = [ ./system/default.nix disko.nixosModules.disko ];
       };
       
       homeConfigurations.${nick} = inputs.home-manager.lib.homeManagerConfiguration {
 	pkgs = inputs.nixpkgs.legacyPackages.${system};
 	extraSpecialArgs = { inherit inputs; };
-	modules = [ ./home/default.nix ];
+	modules = [ ./homeManager/default.nix ];
       };
     };
 }

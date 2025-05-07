@@ -1,0 +1,82 @@
+.bar {
+  background: $bg;
+}
+
+.left-two-button {
+  background: $bg1;
+  color: $fg;
+  margin: 7px 0px 7px 10px;
+  padding: 0px 5px 0px 5px;
+  border-radius: 6px;
+  font-family: SymbolsFontMono;
+}
+
+.menu-left {
+  padding: 1px 4px 1px 5px;
+  margin: 8px 0px 8px 10px;
+  color: $bg;
+  background: $fg;
+}
+
+.volme {
+  margin: 0px 5px 0px 6px;
+}
+
+.battery {
+  margin: 0px 5px 0px 0px;
+}
+
+.time {
+  border-radius: 6px;
+  padding: 0px 4px 0px 4px;
+  margin: 9px 3px 9px 3px;
+}
+
+.weather,
+.separator {
+  background: $bg;
+  color: $fg;
+}
+
+.time {
+  background: $fg;
+  color: $bg;
+}
+
+.weather {
+  padding: 1px 4px 1px 5px;
+  margin: 7px 0px 7px 5px;
+  background: $bg1;
+  color: $fg;
+  border-radius: 6px;
+}
+
+.left-music-text {
+  background: $bg1;
+  color: $fg;
+  margin: 7px 0px;
+  padding: 0px 5px;
+  border-radius: 6px;
+}
+
+.workspaces {
+  background: $bg;
+  color: $fg;
+  padding: 3px 6px 3px 6px;
+  margin: 6px 4px 6px 3px;
+  border-radius: 6px;
+}
+
+.w {
+  background: $bg1;
+  color: $fg;
+  padding: 0px 4px;
+  margin: 0px 3px;
+}
+
+.w-actv {
+  background: $fg;
+  color: $bg;
+  padding: 0px 4px;
+  margin: 0px 3px;
+}
