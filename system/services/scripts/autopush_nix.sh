@@ -40,7 +40,7 @@ copy_add_push_gthb() {
 }
 
 cleaning() {
-	rm -r $TMP/tmp_nix_github $TMP/nix_codeberg
+	rm -rf $TMP/tmp_nix_github $TMP/tmp_nix_codeberg
 }
 
 main() {
