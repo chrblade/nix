@@ -12,8 +12,12 @@ TMP="/home/$USER/.cache"
 NIX_CTLG="/home/$USER/nix"
 REPO_CODEBERG="$TMP/tmp_nix_codeberg"
 REPO_GITHUB="$TMP/tmp_nix_github"
+LOCK_FILE_GIT="/home/$USER/.config/git/config"
 
 cp_clone_cdbrg() {
+	if [ -f "$LOCK_FILE_GIT" ]; then
+		rm -r $LOCK_FILE_GIT
+	fi
 	cleaning
 	mkdir $REPO_CODEBERG
 	git clone https://$TOKEN_CODEBERG@codeberg.org/$USER/nix $REPO_CODEBERG
