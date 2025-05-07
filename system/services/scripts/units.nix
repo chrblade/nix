@@ -30,8 +30,12 @@
 			setxkbmap = {
 				wantedBy = [ "timers.target" ];
 				description = "change layout"; #заебало в определенное время сбрасываться
+				path = [ pkgs.xorg.setxkbmap pkgs.dunst ];
+				script = ''/home/chronoblade/nix/system/services/scripts/setxkbmap.sh'';
 				serviceConfig = {
-					ExecStart = ''setxkbmap -layout us,ru -variant qwerty -option grp:alt_shift_toggle && dunstify "смена раскладки"'';
+					User = "chronoblade";
+					WorkingDirectory = "/home/chronoblade";
+					#ExecStart = ''${pkgs.setxkbmap}/bin/setxkbmap -layout us,ru -variant qwerty -option grp:alt_shift_toggle && ${pkgs.dunst}/bin/dunstify "смена раскладки"'';
 				};
 			};
 		};
