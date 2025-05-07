@@ -14,6 +14,7 @@ REPO_CODEBERG="$TMP/tmp_nix_codeberg"
 REPO_GITHUB="$TMP/tmp_nix_github"
 
 cp_clone_cdbrg() {
+	cleaning
 	mkdir $REPO_CODEBERG
 	git clone https://$TOKEN_CODEBERG@codeberg.org/$USER/nix $REPO_CODEBERG
 	git -C $REPO_CODEBERG pull
