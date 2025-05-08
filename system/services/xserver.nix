@@ -3,17 +3,10 @@
 		xserver = {
 		  enable = true;
 		  videoDrivers = [ "nvidia" ];
-			desktopManager = {
-				gnome.enable = true;
-				lxqt.enable = true;
-				mate.enable = true;
-			};
-			windowManager = {
-				icewm.enable = true;
-			};
+			desktopManager.plasma6.enable = true;
 			displayManager = {
-				lightdm.enable = true;
-				gdm.enable = false;
+				lightdm.enable = false;
+				sddm.enable = true;
 			};
 		};
 		libinput = {
