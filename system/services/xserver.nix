@@ -4,6 +4,7 @@
 		  enable = true;
 		  videoDrivers = [ "nvidia" ];
 			desktopManager.gnome.enable = true;
+			desktopManager.lxqt.enable = true;
 			displayManager = {
 				lightdm.enable = false;
 				gdm.enable = true;
