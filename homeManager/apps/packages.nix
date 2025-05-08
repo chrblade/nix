@@ -29,10 +29,6 @@
 		obsidian
       
 		#Утилиты
-    pamixer
-    jq
-    pyradio
-    cava
 		playerctl
     pavucontrol
 		grim
@@ -41,8 +37,5 @@
 		mpv
 		gowall
 
-		catppuccin-kvantum
-		catppuccin-papirus-folders
-		colloid-icon-theme
 	];
 }
