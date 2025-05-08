@@ -9,6 +9,8 @@
 		#Игры
 		prismlauncher
 		heroic
+		
+		winetricks
 		wineWowPackages.stable
 
 		#Рисовалка/медиа

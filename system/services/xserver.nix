@@ -4,6 +4,7 @@
 		  enable = true;
 		  videoDrivers = [ "nvidia" ];
 			desktopManager.plasma6.enable = true;
+			desktopManager.lxqt.enable = true;
 			displayManager = {
 				lightdm.enable = false;
 				sddm.enable = true;
