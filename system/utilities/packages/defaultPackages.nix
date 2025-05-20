@@ -28,5 +28,11 @@
 		intel-media-driver
 		vaapi-intel-hybrid
 		nvidia-vaapi-driver
+
+		amneziawg-go
+		amnezia-vpn
+
+		ntfs3g
+		ntfsprogs
 	];
 }

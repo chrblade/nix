@@ -10,9 +10,10 @@
 			bufferline-nvim
 			nvim-web-devicons
 			nvim-lspconfig
+			adwaita-nvim
     ];
     extraConfig = ''
-			 colorscheme catppuccin-frappe
+			 colorscheme adwaita
        set tabstop=2
        set softtabstop=2
        set shiftwidth=2

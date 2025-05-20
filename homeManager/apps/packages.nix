@@ -5,6 +5,7 @@
 		transmission_4-gtk
 		filezilla
 		cassette
+		telegram-desktop
 
 		#Игры
 		prismlauncher
@@ -19,25 +20,36 @@
 		vlc
 		droidcam
 
-		#ПРоги стола
-		nemo
-		eog
 		file-roller
-
-		#IDE
-    netbeans
 
 		#Заметки
 		obsidian
       
 		#Утилиты
-		playerctl
-    pavucontrol
-		grim
-		onefetch
+   		pavucontrol
 		dconf
 		mpv
 		gowall
 
+		whitesur-cursors
+		gnomeExtensions.blur-my-shell
+		gnomeExtensions.dash-to-dock
+		gnome-tweaks
+
+		kitty
+		eog
+		neovim-gtk
+		adw-gtk3
+		
+		blender
+		dino
+		ferium
+		xnee
+		
+		cabextract
+		wimlib
+		chntpw
+		cdrtools
+		aria2
 	];
 }

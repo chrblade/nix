@@ -11,6 +11,9 @@
 			jetbrains-mono
 			nerd-fonts.symbols-only
 			nerd-fonts.jetbrains-mono
+			inter
+			inter-nerdfont
+			cascadia-code
 		];
 		fontconfig.defaultFonts.emoji = [ "Noto Color Emoji" ];
 	};

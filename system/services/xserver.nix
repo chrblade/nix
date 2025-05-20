@@ -1,14 +1,13 @@
 { config, pkgs, ... }: {
 	services = {
+		desktopManager.cosmic.enable = false;
 		xserver = {
 		  enable = true;
 		  videoDrivers = [ "nvidia" ];
-			desktopManager.plasma6.enable = true;
-			desktopManager.lxqt.enable = true;
-			displayManager = {
-				lightdm.enable = false;
-				sddm.enable = true;
-			};
+			desktopManager.pantheon.enable = false;
+		  displayManager.lightdm.enable = false;
+			displayManager.gdm.enable = true;
+			desktopManager.gnome.enable = true;
 		};
 		libinput = {
 			enable = true;
