@@ -10,6 +10,8 @@
 		#Игры
 		prismlauncher
 		heroic
+		superTux
+		openttd
 		
 		winetricks
 		wineWowPackages.stable
@@ -51,5 +53,10 @@
 		chntpw
 		cdrtools
 		aria2
+		morewaita-icon-theme
+		go
+		blockbench
+		powershell
+		powershell-editor-services
 	];
 }
